@@ -18,7 +18,7 @@ class Programmer(Employee):
         self.tech = []
 
     def work(self):
-        emp_work = super().work()[:-1]
+        emp_work = super().work()[:-2]
         return emp_work + ' for coding!'
 
     def add_tech(self, skill):
@@ -42,6 +42,20 @@ class Programmer(Employee):
         return 'Alpha-programmer`s tech stack: {}.'.format(other.tech)
 
 
+class Vacancy:
+    def __init__(self, title, main_skill, main_skill_level):
+        self.title = title
+        self.main_skill = main_skill
+        self.main_skill_level = main_skill_level
+
+    def __str__(self):
+        return '{}: {} {}\n'.format(self.title, self.main_skill, self.main_skill_level)
+
+
+class UnableToWorkException(Exception):
+    pass
+
+
 class Candidate(Employee):
     def __init__(self, name, surname, email, salary, technologies, main_skill, main_skill_grade):
         super().__init__(name, surname, email, salary)
@@ -49,9 +63,8 @@ class Candidate(Employee):
         self.main_skill = main_skill
         self.main_skill_grade = main_skill_grade
 
+    def work(self):
+        raise UnableToWorkException('I’m not hired yet, lol.')
 
-class Vacancy:
-    def __init__(self, title, main_skill, main_skill_level):
-        self.title = title
-        self.main_skill = main_skill
-        self.main_skill_level = main_skill_level
+
+

@@ -7,12 +7,28 @@ class Employee:
         self.surname = surname
         self.email = email
         self.salary = salary
+        self.validate_email()
+        self.save_email()
+
+    def save_email(self):
+        with open('email.txt', 'a') as f:
+            f.write(self.email)
+            f.write('\n')
+
+    def validate_email(self):
+        with open('email.txt', 'r') as f:
+            line = f.readline()
+            while line:
+                line = line.strip()
+                if self.email == line:
+                    raise ValueError
+                line = f.readline()
 
     def work(self):
         return '{} comes to the office!\n'.format(self.name)
 
     def check_salary(self, days):
-        return '{} earns {} for {} days.\n'.format(self.name, self.salary*days, days)
+        return self.salary*days
 
     def month_salary(self):
         now = date.today()
@@ -27,7 +43,7 @@ class Employee:
                 day_count += 1
 
         d = day_count
-        return '{}`s month salary is {}.\n'.format(self.name, self.salary*d)
+        return self.salary*d
 
     def __str__(self):
         return '{}: {} {}\n'.format(self.__class__.__name__, self.name, self.surname)

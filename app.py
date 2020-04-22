@@ -1,4 +1,7 @@
-from subclass import Recruiter, Programmer, Candidate, Vacancy
+import datetime
+import traceback
+from subclass import Recruiter, Programmer, Candidate, Vacancy, UnableToWorkException
+
 
 if __name__ == '__main__':
     worker1 = Recruiter('Stan', 'Stanson', 'ss@gmail.com', 200, 3)
@@ -18,3 +21,30 @@ if __name__ == '__main__':
     vacancy1 = Vacancy('V1', 't2', 2)
     vacancy2 = Vacancy('V2', 't3', 3)
     print(vacancy1)
+
+    print(worker2.work())
+    ###########################
+    # # not hired yet except.
+    # worker6.work()
+
+    try:
+        worker6.work()
+    except UnableToWorkException as err:
+        print(err)
+    finally:
+        print('It`s Ok.')
+    ################################
+    # except. logger
+
+    def main():
+        raise ValueError
+    try:
+        main()
+    except Exception as err:
+        with open('logs.txt', 'a') as f:
+            f.write(str(datetime.datetime.today()) + '\n')
+            f.write(type(err).__name__ + '\n')
+            f.write(traceback.format_exc() + '\n')
+            print('Error was logged!')
+    finally:
+        print('It`s Ok.')
